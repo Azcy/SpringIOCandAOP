@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="bean" class="IOC.Bean">
+        <!--数组属性注入值-->
+        <property name="arr">
+            <value>c++,java,vb.net</value>
+        </property>
+        <!--list集合属性注入值-->
+        <property name="list">
+            <list>
+                <value>zhou</value>
+                <value>zhang</value>
+                <value>wang</value>
+            </list>
+        </property>
+        <!--set集合属性注入值-->
+        <property name="set">
+            <set>
+                <value>zhou -- set</value>
+                <value>zhang -- set</value>
+                <value>wang -- set</value>
+            </set>
+        </property>
+        <!--map集合属性注入值-->
+        <property name="map">
+            <map>
+                <entry key="key1" value="value1"></entry>
+                <entry key="key2" value="value2"></entry>
+                <entry key="key3" value="value3"></entry>
+            </map>
+        </property>
+    </bean>
+
+
+    <bean id="checkbean" class="AOP.CheckSecurity"></bean>
+    <bean id="userDao" class="AOP.UserDao"/>
+    <aop:config>
+    <aop:aspect id="security" ref="checkbean">
+        <aop:pointcut id="allAddMethod" expression="execution(* AOP.UserDao.*(..))"/>
+        <aop:before method="check" pointcut-ref="allAddMethod"/>
+    </aop:aspect>
+    </aop:config>
+
+</beans>
